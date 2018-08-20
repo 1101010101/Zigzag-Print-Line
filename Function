@@ -1,0 +1,70 @@
+//“之”字形打印矩阵 
+//【题目】 给定一个矩阵matrix，按照“之”字形的方式打印这个矩阵，
+//例如： 
+//1   2   3   4
+//5   6   7   8
+//9  10  11  12 
+//“之”字形打印的结果为：1，2，5，9，6，3，4，7，10，11，8，12 
+//【要求】 额外空间复杂度为O(1)
+#include<iostream>
+#include<stdlib.h>
+#include<vector>
+using namespace std;
+
+void printMatrix(vector<vector<int>>& m);
+void printLevel(vector<vector<int>>& m, int a, int b, int dr, int dc, bool fromUp);
+
+int main()
+{
+	int a[] = { 1, 2, 3, 4 };
+	vector<int> ivec(a, a + 4);
+	vector<vector<int> > m;
+	m.push_back(ivec);
+	ivec[0] = 5;
+	ivec[1] = 6;
+	ivec[2] = 7;
+	ivec[3] = 8;
+	m.push_back(ivec);
+	ivec[0] = 9;
+	ivec[1] = 10;
+	ivec[2] = 11;
+	ivec[3] = 12;
+	m.push_back(ivec);
+	printMatrix(m);
+	system("pause");
+	return 0;
+}
+
+void printMatrix(vector<vector<int>>& m)
+{
+	int a(0), b(0),c(0),d(0);
+	int endR = m.size() - 1, endC = m[0].size() - 1;
+	bool fromUp = false;
+	while (a != endR + 1)
+	{
+		printLevel(m, a, b, c, d, fromUp);
+		a = b == endC ? a + 1 : a;
+		b = b == endC ? b : b + 1;
+		d = c == endR ? d + 1 : d;
+		c = c == endR ? c : c + 1;
+		fromUp = !fromUp;
+	}
+}
+
+void printLevel(vector<vector<int>>& m, int a, int b, int c, int d, bool fromUp)
+{
+	if (fromUp)
+	{
+		while (a != c + 1)
+		{
+			cout << m[a++][b--] << " ";
+		}
+	}
+	else
+	{
+		while (c != a - 1)
+		{
+			cout << m[c--][d++] << " ";
+		}
+	}
+}
